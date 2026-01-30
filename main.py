@@ -18,3 +18,16 @@ def create_student(data: Student):
         "message": "Student created successfullly",
         "student": data
     }
+
+USERS = {
+    "1a" : {"name": "Alice", "age": 21},
+    "2b" : {"name": "Bob", "age": 22},
+    "3c" : {"name": "Charlie", "age": 23}
+}
+
+@app.get("/user/{user_id}")
+def get_user(user_id: str):
+    user = USERS.get(user_id)
+    if user:
+        return{"user_id": user_id, "user": user}
+    return{"message": "User not found"}
