@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi import Depends
-from db.deps import get_db
+
 from models.student import Student
+from db.deps import get_db
 
 app = FastAPI()
 
@@ -50,6 +51,7 @@ def get_all_users(user_id: str = None):
     return{"users": USERS}
 
 
+
 @app.post("/students")
 def create_student_db(data: StudentReq, db = Depends(get_db)):
     new_student = Student(
@@ -61,6 +63,16 @@ def create_student_db(data: StudentReq, db = Depends(get_db)):
     db.add(new_student)
 
     db.commit()
-    db.referesh(new_student)
+    db.refresh(new_student)
 
     return new_student
+
+@app.get("/students")
+def get_all_students(id:int = None, db = Depends(get_db)):
+    students = db.query(Student).all()
+    return students
+
+@app.get("/students_key")
+def get_all_key(key = "ish", db = Depends(get_db)):
+    student = db.query(Student).filter(Student.name.like("%"+key+"%")).all()
+    return student
