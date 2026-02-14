@@ -1,9 +1,6 @@
 import requests
-<<<<<<< HEAD
-=======
 import json
 import os
->>>>>>> 036be9f (destination recommender)
 
 # CONFIG
 SYSTEM_PROMT = """
@@ -72,12 +69,9 @@ You are a **decision-making assistant** helping the user choose where to go next
 
 """
 
-<<<<<<< HEAD
-=======
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 GROQ_API_KEY= os.getenv("GROQ_API_KEY")
 
->>>>>>> 036be9f (destination recommender)
 class SearchAgent:
     def __init__(self):
         self.llm_url = ""
@@ -112,7 +106,7 @@ class SearchAgent:
     
     def run(self, user_input):
         messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": SYSTEM_PROMT},
             {"role": "user", "content": f"User_input: {user_input}. Do you need to perform a websearch? If yes, output only a SEARCH_QUERy"}
         ]
 
